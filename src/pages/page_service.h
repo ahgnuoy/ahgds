@@ -40,7 +40,7 @@ struct menu_item_node
     MenuItemGroup* children;
 };
 
-int select_menu_item(PageBreadcrumbs *pb, int count);
+void select_menu_item(PageBreadcrumbs *pb, int count);
 void draw_logo();
 void draw_navigation_guide();
 void draw_exit_message();
@@ -53,5 +53,5 @@ void append_menu_item_group(MenuItemGroup*, MenuItemNode*);
 void show_page(PageBreadcrumbs* pb, bool logo);
 void move_page(PageBreadcrumbs* pb, MenuItemNode* min);
 void prev_page(PageBreadcrumbs* pb);
-
+void exit_page(PageBreadcrumbs* pb);
 #endif

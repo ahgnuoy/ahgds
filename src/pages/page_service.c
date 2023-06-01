@@ -10,32 +10,43 @@ void draw_logo() {
 
 void draw_navigation_guide() {
     char *txt = 
-    "[p]previous [h]home [e]exit [c]cancel \n";
-    printf(txt);
+    // "[p]previous [h]home [e]exit [c]cancel \n";
+    "(e)xit\n";
+    printf("%s", txt);
+    printf("-----------------------------------------\n");
 }
 
-int select_menu_item(PageBreadcrumbs* pb, int count)
+void select_menu_item(PageBreadcrumbs* pb, int count)
 {
     printf("input> ");
-    int input_number;
-    scanf("%d", &input_number);
-    input_number = input_number - 1;
-    if(input_number < count || input_number >= 0)
+    char input_value;
+    scanf("%c", &input_value);
+    if(input_value <= '9' && input_value > '0')
     {
-        MenuItemNode* min = pb->top->min->children->head;
-        for(int i = 0; i < input_number; i++) min = min->next;
-        if(min->mi->job != NULL) min->mi->job();
-        if(min->children->length != 0)
+        int input_number = input_value - '1';
+        if(input_number > count)
         {
-            move_page(pb, min);
+            printf("Not Valid\n");
+            printf("input> ");
+            select_menu_item(pb, count);
         }
-        return input_number;
+        else
+        {
+            MenuItemNode* min = pb->top->min->children->head;
+            for(int i = 0; i < input_number; i++) min = min->next;
+            if(min->mi->job != NULL) min->mi->job();
+            if(min->children->length != 0)
+            {
+                move_page(pb, min);
+            }
+        }
     }
     else
     {
-        printf("Not Valid\n");
-        printf("input> ");
-        select_menu_item(pb, count);
+        if(input_value == 'e')
+        {
+            exit_page(pb);
+        }
     }
 }
 
@@ -50,6 +61,7 @@ void show_page(PageBreadcrumbs* pb, bool logo)
     PageNode* pn = pb->top;
     MenuItemNode* min = pn->min;
     MenuItemGroup* mig = min->children;
+    draw_navigation_guide();
     if(logo) draw_logo();
     int cnt = 0;
     for(MenuItemNode* tmin = mig->head; tmin != NULL; tmin = tmin->next)
@@ -140,4 +152,10 @@ void draw_exit_message()
     system("cls");
     printf("BYE\n");
     return;
+}
+
+void exit_page(PageBreadcrumbs* pb)
+{
+    draw_exit_message();
+    pb->exit = true;
 }

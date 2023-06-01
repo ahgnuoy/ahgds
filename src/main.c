@@ -11,5 +11,7 @@ int main()
     MenuItemNode* min = setup_menu();
     move_page(pb, min);
     while(!pb->exit) show_page(pb, true);
+    getchar();
+    getchar();
     return 0;
 }
