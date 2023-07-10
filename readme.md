@@ -6,7 +6,10 @@
 
 ### Data Structure
 
+#### Bugs
+
 1. Circular Linked List
+    1. Insert Malfunction when input value contains spaces 
 
 2. Doubly Linked List
 

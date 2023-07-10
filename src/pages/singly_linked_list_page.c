@@ -38,14 +38,7 @@ void singly_linked_list_insert_item()
     printf("[2] Input Index [current list length is %d]: \n", sll->length);
     int index = 0;
     scanf("%d", &index);
-    if(index == 0)
-    {
-        if(strlen(new_value) > 0) InsertSinglyLinkedListNode(sll, sll->length - 1, new_value);
-    }
-    else
-    {
-        if(strlen(new_value) > 0) InsertSinglyLinkedListNode(sll, index, new_value);
-    }
+    if(strlen(new_value) > 0) InsertSinglyLinkedListNode(sll, index, new_value);
 }
 
 void singly_linked_list_delete_item()

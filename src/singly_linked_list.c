@@ -29,16 +29,22 @@ SinglyLinkedList *MakeSinglyLinkedList() {
     list->length = 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param list 
+ * @param index index 0 will insert new node to head
+ * @param value input some valuable data
+ */
 void InsertSinglyLinkedListNode(SinglyLinkedList *list, int index, char *value) {
-    int indexFromHead = list->length - index - 1;
-    if(indexFromHead == 0) {
+    if(index == 0) {
         SinglyLinkedListNode *newNode = CreateNode(value);
         newNode->next = list->head;
         list->head = newNode;
     }
     else {
         SinglyLinkedListNode *prevNode = list->head;
-        for(int i = 1; i < indexFromHead; i++) {
+        for(int i = 1; i < index; i++) {
             prevNode = prevNode->next;
         }
         SinglyLinkedListNode *newNode = CreateNode(value);
@@ -51,19 +57,18 @@ void InsertSinglyLinkedListNode(SinglyLinkedList *list, int index, char *value) 
 void DeleteSinglyLinkedListNode(SinglyLinkedList *list, int index) {
     SinglyLinkedListNode *node = list->head;
     SinglyLinkedListNode *preNode;
-    int indexFromHead = list->length - index - 1; 
-    if(indexFromHead < 0) return;
-    if(indexFromHead == 0) {
+    if(index < 0) return;
+    if(index == 0) {
         list->head = node->next;
         DeleteNode(node);
         list->length--;
     }
     else {
-        for(int i = 0; i < indexFromHead; i++) {
-            if(i == indexFromHead - 1) preNode = node;
+        for(int i = 0; i < index; i++) {
+            preNode = node;
             node = node->next;
         }
-        if(indexFromHead == list->length) ChangeNext(preNode, NULL);
+        if(index == list->length) ChangeNext(preNode, NULL);
         else ChangeNext(preNode, node->next);
         DeleteNode(node);
         list->length--;
@@ -72,12 +77,12 @@ void DeleteSinglyLinkedListNode(SinglyLinkedList *list, int index) {
 
 void PrintSinglyLinkedListNode(SinglyLinkedList *list)
 {
-    int index = list->length - 1;
+    int index = 0;
     SinglyLinkedListNode *currentNode = list->head;
     while(currentNode != NULL) {
         printf("\n-----------NODE-----------");
         printf("\n|addr : %p |", currentNode);
-        printf("\n|index: %16d |", index--);
+        printf("\n|index: %16d |", index++);
         printf("\n|data : %16s | ", currentNode->data);
         printf("\n|next : %p |", currentNode->next);
         currentNode = currentNode->next;
@@ -98,10 +103,11 @@ void ReadFile(SinglyLinkedList *list)
     while(!feof(fp))
     {
         fscanf(fp, "%s\n", buffer);
-        InsertSinglyLinkedListNode(list, list->length - 1, buffer);
+        InsertSinglyLinkedListNode(list, 0, buffer);
     }
 
     fclose(fp);
+    ReverseSinglyLinkedList(list);
     return;
 }
 
@@ -112,14 +118,12 @@ void SaveFile(SinglyLinkedList *list)
     fp = fopen("./my-data.txt","w+");
     if (fp == NULL) return;
 
-    ReverseSinglyLinkedList(list);
     SinglyLinkedListNode *currentNode = list->head;
     while(currentNode != NULL) {
         fprintf(fp, currentNode->data);
         fprintf(fp, "\n");
         currentNode = currentNode->next;
     }
-    ReverseSinglyLinkedList(list);
     fclose(fp);
     return;
 }
