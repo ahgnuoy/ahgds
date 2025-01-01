@@ -31,7 +31,11 @@ void singly_linked_list_setup_menu(MenuItemNode* min)
 
 void singly_linked_list_insert_item()
 {
+    #ifdef _WIN32
     system("cls");
+    #else
+    system("clear");
+    #endif
     printf("[1] Input New Value : \n");
     char new_value[50] = "";
     scanf("%s", new_value);
@@ -43,7 +47,11 @@ void singly_linked_list_insert_item()
 
 void singly_linked_list_delete_item()
 {
+    #ifdef _WIN32
     system("cls");
+    #else
+    system("clear");
+    #endif
     printf("1. Input Index : \n");
     int index;
     scanf("%d", &index);

@@ -57,7 +57,11 @@ void select_menu_item(PageBreadcrumbs* pb, int count)
  */
 void show_page(PageBreadcrumbs* pb, bool logo)
 {
+    #ifdef _WIN32
     system("cls");
+    #else
+    system("clear");
+    #endif
     PageNode* pn = pb->top;
     MenuItemNode* min = pn->min;
     MenuItemGroup* mig = min->children;
@@ -149,7 +153,11 @@ void append_menu_item_group(MenuItemGroup* mig, MenuItemNode* node)
 
 void draw_exit_message()
 {
+    #ifdef _WIN32
     system("cls");
+    #else
+    system("clear");
+    #endif
     printf("BYE\n");
     return;
 }
